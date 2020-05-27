@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"strconv"	
+	"strconv"
 
 	"github.com/PaulSonOfLars/gotgbot"
 	"github.com/PaulSonOfLars/gotgbot/ext"
@@ -17,9 +17,9 @@ import (
 var ctx context.Context = context.Background()
 var opt, err = redis.ParseURL(os.Getenv("REDIS_URL"))
 var client *redis.Client = redis.NewClient(&redis.Options{
-	Addr: opt.Addr,
+	Addr:     opt.Addr,
 	Password: opt.Password,
-	DB: opt.DB,
+	DB:       opt.DB,
 })
 
 func main() {
@@ -27,6 +27,11 @@ func main() {
 	cfg := zap.NewProductionEncoderConfig()
 	cfg.EncodeLevel = zapcore.CapitalLevelEncoder
 	cfg.EncodeTime = zapcore.RFC3339TimeEncoder
+
+	// app, err := newrelic.NewApplication(
+	// 	newrelic.Config{AppName: "mighty-gta-bot-v2", License: os.Getenv("NEW_RELIC_LICENSE_KEY"), Logger: newrelic.NewLogger(os.Stdout) },
+
+	// )
 
 	logger := zap.New(zapcore.NewCore(zapcore.NewConsoleEncoder(cfg), os.Stdout, zap.InfoLevel))
 	defer logger.Sync() // flushes buffer, if any
